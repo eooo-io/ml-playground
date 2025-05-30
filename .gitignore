@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.eggs/
+
+# Unit test / coverage reports
+.coverage
+.coverage.*
+.cache
+htmlcov/
+.pytest_cache/
+
+# Type checkers
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# IPython
+profile_default/
+.ipython/
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+
+# Python environment files
+Pipfile.lock
+.Python
+
+# IDEs and editors
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
+
+# dotenv files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Sphinx documentation
+docs/_build/
