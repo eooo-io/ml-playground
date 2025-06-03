@@ -27,7 +27,7 @@ A collection of Jupyter notebooks for exploring various machine learning algorit
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:eooo-io/ml-playground.git
    cd ml-playground
    ```
 2. Build the Docker image and start JupyterLab:
