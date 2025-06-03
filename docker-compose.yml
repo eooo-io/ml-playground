@@ -1,11 +1,28 @@
+version: "3.8"
+
 services:
   jupyter:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TARGETPLATFORM: ${TARGETPLATFORM:-linux/amd64} # Default to amd64 if not specified
+    image: ml-playground-jupyter:${TAG:-latest}
+    platform: ${PLATFORM:-linux/amd64} # Default to amd64 if not specified
     container_name: jupyter_lab_custom
     ports:
-      - "8888:8888"
+      - "${JUPYTER_PORT:-8888}:8888"
     volumes:
       - ./notebooks:/home/jovyan/work
+      - ./data:/home/jovyan/work/data
     environment:
       - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN:-} # Empty by default for development
+      - PYTHONPATH=/home/jovyan/work
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/lab"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
