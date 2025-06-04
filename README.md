@@ -1,100 +1,149 @@
-# ML Playground
+# ML Playground - Content Processing for RAG Systems
 
-A collection of Jupyter notebooks for exploring various machine learning algorithms and techniques using Python.
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![Jupyter](https://img.shields.io/badge/Jupyter-Lab-F37626?style=flat&logo=jupyter&logoColor=white)](https://jupyter.org)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Docker Compose](https://img.shields.io/badge/Docker_Compose-Configured-2496ED?style=flat&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![Platform](https://img.shields.io/badge/Platform-AMD64_|_ARM64-00979D?style=flat&logo=arduino&logoColor=white)](https://www.docker.com/products/docker-desktop/)
+[![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
 
-## Features
+This repository provides a comprehensive set of tools for processing various content types for RAG (Retrieval-Augmented Generation) systems. It includes specialized processors for different content formats, quality assessment, and vector storage integration.
 
-- Interactive JupyterLab environment via Docker
-- Multi-architecture support (AMD64 and ARM64)
-  - Compatible with Intel/AMD processors
-  - Compatible with Apple Silicon (M1/M2/M3)
-  - Compatible with AWS Graviton
-- Pre-installed ML libraries:
-  - seaborn
-  - xgboost
-  - lightgbm
-  - catboost
-  - imbalanced-learn
-- Data exploration and profiling with pandas-profiling
-- Hyperparameter optimization using scikit-optimize
-- Support for reading and writing Excel and Apache Arrow data formats
+## Content Types & Use Cases
 
-## Prerequisites
+### 1. Books & E-books
+- **Formats**: EPUB, PDF, MOBI
+- **Processing**:
+  - Chapter-based text extraction
+  - Smart text chunking with context preservation
+  - Metadata extraction (title, author, language)
+  - Table of contents preservation
+  - Citation handling
 
-- Docker
-- Docker Compose
-- Docker Buildx (for multi-arch builds)
-- (Optional) Python 3.6+ and pip for local setup
+### 2. Magazines & Articles
+- **Formats**: PDF, HTML, DOCX
+- **Processing**:
+  - Layout-aware text extraction
+  - Image caption processing
+  - Article segmentation
+  - Byline and date extraction
+  - Advertisement filtering
 
-## Quick Start
+### 3. Scientific Papers (Whitepapers)
+- **Formats**: PDF, arXiv, LaTeX
+- **Processing**:
+  - Section detection (Abstract, Methods, Results, etc.)
+  - Citation extraction and processing
+  - Formula and equation handling
+  - Reference linking
+  - Author affiliation extraction
+  - Integration with academic APIs (arXiv, CrossRef, Scopus)
 
-### Using Docker Compose
+### 4. Song Lyrics
+- **Formats**: Text, LRC, MIDI
+- **Processing**:
+  - Verse/chorus structure detection
+  - Timing information preservation
+  - Metadata extraction (artist, album, year)
+  - Language detection
+  - Integration with Genius API
+  - Repetition handling
+
+### 5. Movie Subtitles
+- **Formats**: SRT, SSA/ASS, VTT
+- **Processing**:
+  - Timing synchronization
+  - Speaker identification
+  - Multi-language support
+  - Sound effect notation handling
+  - Dialogue extraction
+  - Scene context preservation
+
+### 6. Pictures & Images
+- **Formats**: JPG, PNG, TIFF, BMP
+- **Processing**:
+  - OCR enhancement and text extraction
+  - Image feature extraction
+  - CLIP model integration
+  - Quality assessment
+  - Metadata extraction (EXIF)
+  - Scene classification
+  - Object detection
+
+### 7. Audio Files
+- **Formats**: MP3, WAV, FLAC, M4A
+- **Processing**:
+  - Speech-to-text conversion
+  - Audio feature extraction
+  - Noise reduction
+  - Speaker diarization
+  - Music/speech separation
+  - Tempo and rhythm analysis
+  - Audio quality assessment
+
+## Vector Storage Integration
+
+Processed content can be stored in various vector databases:
+- PostgreSQL (with pgvector)
+- Elasticsearch
+- Weaviate
+- Pinecone
+- Qdrant
+
+## Quality Assessment
+
+Each content type includes specialized quality metrics:
+- Text quality (readability, coherence)
+- Image quality (resolution, sharpness)
+- Audio quality (SNR, clarity)
+- Content relevance
+- Language consistency
+- Format integrity
+
+## Getting Started
 
 1. Clone the repository:
-   ```bash
-   git clone git@github.com:eooo-io/ml-playground.git
-   cd ml-playground
-   ```
+```bash
+git clone [repository-url]
+```
 
-2. Build and start JupyterLab (single architecture):
-   ```bash
-   docker-compose up --build
-   ```
+2. Build the Docker container:
+```bash
+docker-compose build
+```
 
-3. Open JupyterLab:
-   - Navigate to `http://localhost:8888/lab` in your browser
-   - No token is required by default (configurable via JUPYTER_TOKEN environment variable)
+3. Start Jupyter Lab:
+```bash
+docker-compose up
+```
 
-Your notebooks are available in the `notebooks/` directory.
+4. Access the notebooks at `http://localhost:8888`
 
-### Multi-Architecture Build
+## Available Notebooks
 
-To build and push multi-architecture images (AMD64 and ARM64):
+1. `text_cleaning_pipeline.ipynb`
+   - Comprehensive text processing
+   - Content quality assessment
+   - Semantic deduplication
+   - Context optimization
 
-1. Make the build script executable:
-   ```bash
-   chmod +x build-multiarch.sh
-   ```
+2. `media_preprocessing.ipynb`
+   - Image/audio/video processing
+   - Feature extraction
+   - Quality enhancement
+   - Media analysis
 
-2. Build and push the images:
-   ```bash
-   # Default build (tags as 'latest')
-   ./build-multiarch.sh
+## Dependencies
 
-   # Custom registry and tag
-   REGISTRY="your-registry/" TAG="v1.0" ./build-multiarch.sh
-   ```
+All required dependencies are included in the Docker configuration. Key libraries:
+- Text processing: PyPDF2, ebooklib, pysrt
+- Media processing: opencv-python, librosa
+- ML/AI: sentence-transformers, spacy
+- Vector stores: psycopg2, elasticsearch-py
 
-### Environment Variables
+## Contributing
 
-The following environment variables can be used to customize the setup:
+Contributions are welcome! Please read our contributing guidelines and submit pull requests for any enhancements.
 
-- `JUPYTER_PORT`: Port to expose JupyterLab (default: 8888)
-- `JUPYTER_TOKEN`: Authentication token (default: empty/disabled)
-- `REGISTRY`: Docker registry prefix for multi-arch builds
-- `TAG`: Image tag for multi-arch builds (default: latest)
-- `PLATFORM`: Override platform for docker-compose (default: linux/amd64)
+## License
 
-### Local Setup (Optional)
-
-1. Create and activate a virtual environment:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-2. Install the requirements:
-   ```bash
-   pip install --no-cache-dir -r requirements.txt
-   ```
-3. Launch JupyterLab:
-   ```bash
-   jupyter lab
-   ```
-
-## Notebooks
-
-Add your Jupyter notebooks (`*.ipynb`) to the `notebooks/` directory. They will be available in the Docker container or locally.
-
-## Data Directory
-
-Place your datasets in the `data/` directory. This directory is mounted in the container at `/home/jovyan/work/data`.
