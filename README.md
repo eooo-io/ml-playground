@@ -104,7 +104,7 @@ Each content type includes specialized quality metrics:
 
 1. Clone the repository:
 ```bash
-git clone [repository-url]
+git clone git@github.com:eooo-io/ml-playground.git
 ```
 
 2. Build the Docker container:
